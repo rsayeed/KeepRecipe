@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Keep Recipe</string>
+    <string name="actionBar_main">Recipe List</string>
+    <string name="error_internet">Could not load Recipe data, please check your internet connection</string>
+    <string name="view_recipe_ingredients">View Recipe Ingredients</string>
+    <string name="recipe_ingredients">Recipe Ingredients</string>
+    <string name="dialog_close">OK</string>
+    <string name="recipe_instructions">STEP DETAILS</string>
+    <string name="previous_btn">Previous Step</string>
+    <string name="next_btn">Next Step</string>
+</resources>

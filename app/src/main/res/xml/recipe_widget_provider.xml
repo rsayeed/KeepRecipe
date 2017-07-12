@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="300dp"
+    android:minHeight="250dp"
+    android:updatePeriodMillis="1800000"
+    android:initialLayout="@layout/recipe_widget"
+    android:previewImage="@mipmap/ic_launcher"
+    android:resizeMode="horizontal|vertical"
+    android:minResizeHeight="250dp"
+    android:minResizeWidth="250dp"
+    android:widgetCategory="home_screen">
+</appwidget-provider>

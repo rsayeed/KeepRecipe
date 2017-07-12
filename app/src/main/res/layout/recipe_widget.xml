@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="250dp"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryLight">
+
+    <TextView
+        android:id="@+id/widget_recipe_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:textAlignment="center"
+        android:padding="6dp"
+        tools:text="Chocolate Pie"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/widget_instruction_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif"
+        android:layout_below="@id/widget_recipe_textView"
+        android:text="@string/recipe_ingredients"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:typeface="normal"
+        tools:text="Recipe Ingredients" />
+
+        <TextView
+            android:id="@+id/widget_ingredients_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:fontFamily="sans-serif"
+            android:padding="24dp"
+            android:textSize="14sp"
+            android:typeface="normal"
+            tools:text="1 CUP MILK" />
+
+    <ImageButton
+        android:id="@+id/refreshWidgetBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/ic_refresh"
+        android:background="@color/colorPrimaryLight"/>
+
+    <ImageButton
+        android:id="@+id/WidgetNextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/ic_navigate_next"
+        android:background="@color/colorPrimaryLight"/>
+</RelativeLayout>
