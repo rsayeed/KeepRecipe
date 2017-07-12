@@ -15,8 +15,8 @@ Android media application that keeps track of your favorite recipes. This was a 
 
 ## Screenshots
 
-![Screenshot1](screenshots/screen_1.png) ![Screenshot2](screenshots/screen_2.png) ![Screenshot3](screenshots/screen_3.png)
-![Screenshot4](screenshots/screen_4.png) ![Screenshot5](screenshots/screen_5.png) 
+![Screenshot1](screenshots/main-mobile-portrait.png) ![Screenshot2](screenshots/detail-mobile-portrait.png) ![Screenshot3](screenshots/media-mobile-portrait.png)
+![Screenshot4](screenshots/media-tablet-landscape.png) ![Screenshot5](screenshots/widget.png) 
 
 
 
