@@ -1,7 +1,7 @@
 # Keep Recipe
 Android media application that keeps track of your favorite recipes. This was a suggested project on the Udacity Android Fast Track program. I have decided to implement the core functionality of the application as well as add some extra features to provide users with a complete Recipe management application.
 
-## The app
+## Features
 <ul>
 <li>The app allows users to keep track of their favorite recipes </li>
 <li>Gives users the ability to create and view recipes, ingredients, and instructional videos</li>
