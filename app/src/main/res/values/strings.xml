@@ -8,4 +8,16 @@
     <string name="recipe_instructions">STEP DETAILS</string>
     <string name="previous_btn">Previous Step</string>
     <string name="next_btn">Next Step</string>
+    <string name="addActivity_Title">Add a Recipe!</string>
+    <string name="addActivity_recipeNameEdit">Enter a Recipe name</string>
+    <string name="quantityLabel">Quantity</string>
+    <string name="measureLabel">Measure (cup, tspn, etc)</string>
+    <string name="ingredientLabel">Ingredient</string>
+    <string name="recipe_steps">Recipe Steps</string>
+    <string name="shortDescLabel">Short Description</string>
+    <string name="longDescLabel">Long Description</string>
+    <string name="videoLabel">Video Link</string>
+    <string name="imageSelectionLabel">Recipe Photo</string>
+    <string name="add_button">ADD</string>
+
 </resources>

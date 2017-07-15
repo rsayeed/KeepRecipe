@@ -44,6 +44,7 @@ public class RecipeContract  {
         // "_ID" column
         public static final String COLUMN_RECIPE_NAME = "RECIPE_NAME";
         public static final String COLUMN_RECIPE_SERVING = "SERVING_SIZE";
+        public static final String COLUMN_IMAGE_URL = "IMAGE_URL";
 
     }
 

@@ -14,7 +14,7 @@ public class RecipeDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "recipeDb.db";
 
     // If you change the database schema, you must increment the database version
-    private static final int VERSION = 1;
+    private static final int VERSION = 2;
 
     // Constructor
     public RecipeDbHelper(Context context) {
@@ -32,6 +32,7 @@ public class RecipeDbHelper extends SQLiteOpenHelper {
         final String CREATE_RECIPE_TABLE = "CREATE TABLE "  + RecipeContract.RecipeEntry.TABLE_NAME + " (" +
                 RecipeContract.RecipeEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME + " TEXT," +
+                RecipeContract.RecipeEntry.COLUMN_IMAGE_URL + " TEXT," +
                 RecipeContract.RecipeEntry.COLUMN_RECIPE_SERVING              + " TEXT);";
 
         // Create Recipe Ingredients table (careful to follow SQL formatting rules)

@@ -84,10 +84,9 @@ public class RecipeDetailsActivity extends AppCompatActivity implements
             // MainActivity
             getSupportActionBar().setTitle(mRecipe.getRecipeName());
 
-            RecipeDataUtils recipeDataUtils = new RecipeDataUtils();
-            recipeDataUtils.setRecipe(mRecipe);
-            recipeDataUtils.setRecipeIngredientsList(mRecipe.getRecipeIngredients());
-            recipeDataUtils.setRecipeStepList(mRecipe.getRecipeSteps());
+            // This is required so that the Widget can load the appropriate data
+            RecipeDataUtils recipeDataUtils = new RecipeDataUtils(mRecipe, mRecipe.getRecipeIngredients(),
+                    mRecipe.getRecipeSteps());
 
         }
 
@@ -221,12 +220,12 @@ public class RecipeDetailsActivity extends AppCompatActivity implements
      */
     public void onPreviousBtnClick(View view) {
 
-            RecipeDataUtils.setPositionOfStep(--positionOfRecipeStep);
+        RecipeDataUtils.setPositionOfStep(--positionOfRecipeStep);
 
-            fragmentID = 1; // unique indentifier for RecipeDetailsFragment
+        fragmentID = 1; // unique indentifier for RecipeDetailsFragment
 
-            // Single pane mode, replace fragment container with RecipeDetailFragment
-            loadFragment();
+        // Single pane mode, replace fragment container with RecipeDetailFragment
+        loadFragment();
     }
 
     /**
@@ -238,13 +237,14 @@ public class RecipeDetailsActivity extends AppCompatActivity implements
      */
     public void onNextBtnClick(View view) {
 
-            RecipeDataUtils.setPositionOfStep(++positionOfRecipeStep);
+        RecipeDataUtils.setPositionOfStep(++positionOfRecipeStep);
 
-            fragmentID = 1; // unique indentifier for RecipeDetailsFragment
+        fragmentID = 1; // unique indentifier for RecipeDetailsFragment
 
-            // Single pane mode, replace fragment container with RecipeDetailFragment
-            loadFragment();
+        // Single pane mode, replace fragment container with RecipeDetailFragment
+        loadFragment();
     }
+
     /**
      * This method is executed when the back button is pressed from Android device
      * Depending on the type of fragment that is currently displayed, the back button should back out

@@ -52,6 +52,7 @@ public class RecipeJsonUtils {
 
             recipe.setRecipeId(recipeJson.getString("id"));
             recipe.setRecipeName(recipeJson.getString("name"));
+            recipe.setImageURL(recipeJson.getString("image"));
 
             JSONArray ingredientsArray = recipeJson.getJSONArray("ingredients");
 

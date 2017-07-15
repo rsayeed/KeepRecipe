@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.android.ubaking.R;
 import com.example.android.ubaking.model.Recipe;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -67,6 +68,30 @@ public class RecipeMainAdapter extends RecyclerView.Adapter<RecipeMainAdapter.Re
         Recipe recipe = mData.get(position);
         Log.v(TAG, "OnBindViewHolder");
         holder.recipeNameTextView.setText(recipe.getRecipeName());
+
+        // Check if we have imageURL, if so, load the image using Picasso
+        if (recipe.getImageURL()!= null && recipe.getImageURL().length() > 0) {
+
+            // Download image from url and display it onto the imageview
+            Picasso.with(mContext).load(recipe.getImageURL()).into(holder.imageUrlView);
+        }
+        else {
+            switch (recipe.getRecipeName()) {
+                case "Nutella Pie":
+                    holder.imageUrlView.setImageResource(R.drawable.nutella);
+                    break;
+                case "Brownies":
+                    holder.imageUrlView.setImageResource(R.drawable.brownies);
+                    break;
+                case "Yellow Cake":
+                    holder.imageUrlView.setImageResource(R.drawable.yellowcake);
+                    break;
+                case "Cheesecake":
+                    holder.imageUrlView.setImageResource(R.drawable.cheesecake);
+                    break;
+            }
+        }
+
     }
 
     @Override
@@ -97,11 +122,13 @@ public class RecipeMainAdapter extends RecyclerView.Adapter<RecipeMainAdapter.Re
     class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         final TextView recipeNameTextView;
+        final ImageView imageUrlView;
 
         RecipeViewHolder(View view) {
             super(view);
 
             recipeNameTextView = (TextView) view.findViewById(R.id.recipe_name);
+            imageUrlView = (ImageView) view.findViewById(R.id.recipeImageView);
             view.setOnClickListener(this);
         }
 

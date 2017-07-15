@@ -17,6 +17,7 @@ public class Recipe implements Serializable {
     List<RecipeIngredients> recipeIngredients;
     List<RecipeStep> recipeSteps;
     String servingSize;
+    String imageURL;
 
     public String getRecipeId() {
         return recipeId;
@@ -58,6 +59,14 @@ public class Recipe implements Serializable {
         this.servingSize = servingSize;
     }
 
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
     @Override
     public String toString() {
         return "Recipe{" +
@@ -66,6 +75,7 @@ public class Recipe implements Serializable {
                 ", recipeIngredients=" + recipeIngredients +
                 ", recipeSteps=" + recipeSteps +
                 ", servingSize='" + servingSize + '\'' +
+                ", imageURL='" + imageURL + '\'' +
                 '}';
     }
 }

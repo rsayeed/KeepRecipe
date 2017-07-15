@@ -33,6 +33,16 @@ public class RecipeDataUtils {
 
     private static View listFragmentViewItem;
 
+    public RecipeDataUtils() {
+    }
+
+    public RecipeDataUtils(Recipe recipe, List<RecipeIngredients> recipeIngredients, List<RecipeStep> recipeSteps) {
+
+        this.setRecipe(recipe);
+        this.setRecipeIngredientsList(recipeIngredients);
+        this.setRecipeStepList(recipeSteps);
+    }
+
     public static Recipe getRecipe() {
         return recipe;
     }

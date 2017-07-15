@@ -16,6 +16,15 @@
         app:cardBackgroundColor="@color/cardview_light_background"
         android:elevation="100dp">
 
+    <ImageView
+        android:id="@+id/recipeImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:background="@drawable/nutella"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:alpha="0.4"/>
+
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,8 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textStyle="bold"
-                android:textSize="24sp"
+                style="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@color/colorAccent"
                 tools:text="Nutella Pie"
                 android:layout_marginLeft="8dp"
@@ -35,7 +43,6 @@
                 android:layout_marginRight="8dp"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"

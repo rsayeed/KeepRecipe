@@ -314,6 +314,9 @@ public class RecipeMainActivity extends AppCompatActivity implements
         Intent intent = new Intent(this, RecipeDetailsActivity.class);
         intent.putExtra("RecipeObj", recipe);
 
+        // Store the data values for retrieval by Detail activity
+        RecipeDataUtils recipeDataUtils = new RecipeDataUtils(recipe, recipe.getRecipeIngredients(), recipe.getRecipeSteps());
+
         // Reset the the recipe step position to zero
         RecipeDataUtils.setPositionOfStep(0);
 
