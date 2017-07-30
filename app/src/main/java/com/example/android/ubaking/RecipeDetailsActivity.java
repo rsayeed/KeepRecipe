@@ -43,6 +43,7 @@ public class RecipeDetailsActivity extends AppCompatActivity implements
     private View savedListView;
     private int fragmentID;
     private int positionOfRecipeStep;
+    private RecipeDetailFragment recipeDetailFragment;
 
     /**
      * Save an integer value that determines which fragment needs to be loaded in Single
@@ -78,7 +79,7 @@ public class RecipeDetailsActivity extends AppCompatActivity implements
         Intent intentThatStartedThisActivity = getIntent();
 
         if (intentThatStartedThisActivity != null) {
-            mRecipe = (Recipe) intentThatStartedThisActivity.getSerializableExtra("RecipeObj");
+            mRecipe = (Recipe) intentThatStartedThisActivity.getParcelableExtra("RecipeObj");
 
             // Change the title of ActionBar to reflect the name of the recipe that was passed from
             // MainActivity
@@ -95,7 +96,6 @@ public class RecipeDetailsActivity extends AppCompatActivity implements
             // We don't need to manually create a Fragment manager because the
             // fragments will be automatically loaded with the two-pane layout
             Log.v(TAG, "TWO PANE MODE, LOADING FRAGMENT");
-
             return;
         }
 
@@ -147,20 +147,19 @@ public class RecipeDetailsActivity extends AppCompatActivity implements
 
         positionOfRecipeStep = positionOfRecipeStepList;
 
+        // Updates the position of the step to display in the details fragment
         RecipeDataUtils.setPositionOfStep(positionOfRecipeStep);
 
         // Two-pane mode logic, create the Recipe passing in the video that needs to be loaded
         if (getResources().getBoolean(R.bool.twoPaneMode)) {
 
-            Log.v(TAG, "Landscape tablet mode");
-
-            RecipeDetailFragment recipeDetailFragment = (RecipeDetailFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.recipeDetailFragment);
-
+            // This is to ensure that Details Fragment is loaded ONCE
             if (recipeDetailFragment != null) {
-
-                recipeDetailFragment.setRecipeStepPosition(RecipeDataUtils.getPositionOfStep());
                 recipeDetailFragment.updateView();
+            } else {
+                // Initialize Details Fragment
+                recipeDetailFragment = (RecipeDetailFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.recipeDetailFragment);
             }
 
         } else {
@@ -263,11 +262,17 @@ public class RecipeDetailsActivity extends AppCompatActivity implements
             finish();
         } else if (fragmentID == 1) {
 
-            // Need to find a way to shut off media player
+            // If full screen mode due to Youtube player
+            if (RecipeDataUtils.isFullScreen()) {
+                RecipeDetailFragment.getYPlayer().setFullscreen(false);
+            }
 
-            fragmentID = 0;
-            clearAllFragments();
-            loadFragment();
+            else {
+                // Clear all fragments
+                fragmentID = 0;
+                clearAllFragments();
+                loadFragment();
+            }
         }
     }
 

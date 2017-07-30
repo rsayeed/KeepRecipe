@@ -9,14 +9,7 @@ import android.provider.BaseColumns;
 
 public class RecipeContract  {
 
-     /* Add content provider constants to the Contract
-     Clients need to know how to access the task data, and it's your job to provide
-     these content URI's for the path to that data:
-        1) Content authority,
-        2) Base content URI,
-        3) Path(s) to the tasks directory
-        4) Content URI for data in the TaskEntry class
-      */
+     /* Add content provider constants to the Contract  */
 
     // The authority, which is how your code knows which Content Provider to access
     public static final String AUTHORITY = "com.example.android.ubaking";

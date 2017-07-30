@@ -24,14 +24,14 @@ import java.util.List;
  */
 
 /**
- * This intent service is used by the RecipeWidgetProvider so that recipe information can be
+ * This intent service is used by the RecipeWidgetProvider and theso that recipe information can be
  * displayed in the corresponding widget
  */
 public class RecipeDataService extends IntentService {
 
     private static final String TAG = RecipeDataService.class.getSimpleName();
 
-    public static final String ACTION_QUERY_RECIPES = "com.example.android.mygarden.action.query_recipes";
+    public static final String ACTION_QUERY_RECIPES = "com.example.android.recipe.action.query_recipes";
 
     public RecipeDataService() {
         super("RecipeDataService");
@@ -70,7 +70,6 @@ public class RecipeDataService extends IntentService {
         List<Recipe> recipeList = new ArrayList<>();
 
         //Query to get a list of all Recipe's from the database
-
         Cursor cursor = getContentResolver().query(RecipeContract.RecipeEntry.CONTENT_URI,
                 null,
                 null,

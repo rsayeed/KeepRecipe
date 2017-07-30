@@ -8,6 +8,15 @@
     <!-- This permission is necessary in order to verify network connectivity -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <!-- This permission is necessary in order to vibrate the phone when validating input for Add Recipe Activity  -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -29,6 +38,17 @@
 
         <activity
             android:name=".RecipeDetailsActivity"
+            android:parentActivityName=".RecipeMainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:taskAffinity=""
+            android:excludeFromRecents="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".RecipeMainActivity" />
+        </activity>
+
+        <activity
+            android:name=".RecipeAddActivity"
             android:parentActivityName=".RecipeMainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

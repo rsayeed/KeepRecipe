@@ -8,4 +8,6 @@
     <color name="colorBlack">#000000</color>
     <color name="colorLightGray">#e0e0e0</color>
     <color name="cardview_initial_background">#71C3DE</color>
+    <color name="colorDefault">#FFFAFAFA</color>
+
 </resources>

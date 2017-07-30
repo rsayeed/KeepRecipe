@@ -43,7 +43,7 @@ public class RecipeDbHelper extends SQLiteOpenHelper {
                 RecipeContract.RecipeIngredientsEntry.COLUMN_QUANTITY + " TEXT," +
                 RecipeContract.RecipeIngredientsEntry.COLUMN_RECIPE_ID + " INTEGER," +
                 " FOREIGN KEY ("+RecipeContract.RecipeIngredientsEntry.COLUMN_RECIPE_ID+") REFERENCES " +
-                RecipeContract.RecipeEntry.TABLE_NAME+"("+RecipeContract.RecipeEntry._ID+"));";
+                RecipeContract.RecipeEntry.TABLE_NAME+"("+RecipeContract.RecipeEntry._ID+")" + " ON DELETE CASCADE" + ");";
 
         final String CREATE_STEP_TABLE = "CREATE TABLE "  + RecipeContract.RecipeStepsEntry.TABLE_NAME + " (" +
                 RecipeContract.RecipeStepsEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -53,7 +53,7 @@ public class RecipeDbHelper extends SQLiteOpenHelper {
                 RecipeContract.RecipeStepsEntry.COLUMN_VIDEO_URL + " TEXT," +
                 RecipeContract.RecipeStepsEntry.COLUMN_RECIPE_ID + " INTEGER," +
                 " FOREIGN KEY ("+RecipeContract.RecipeStepsEntry.COLUMN_RECIPE_ID+") REFERENCES " +
-                RecipeContract.RecipeEntry.TABLE_NAME+"("+RecipeContract.RecipeEntry._ID+"));";
+                RecipeContract.RecipeEntry.TABLE_NAME+"("+RecipeContract.RecipeEntry._ID+")" + " ON DELETE CASCADE" + ");";
 
         db.execSQL(CREATE_RECIPE_TABLE);
         db.execSQL(CREATE_INGREDIENTS_TABLE);

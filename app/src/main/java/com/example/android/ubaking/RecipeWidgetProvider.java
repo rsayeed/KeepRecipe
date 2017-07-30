@@ -52,6 +52,11 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
             Intent intentDetail = new Intent(context, RecipeDetailsActivity.class);
 
             intentDetail.putExtra("RecipeObj", RecipeDataUtils.getRecipeListForWidget().get(mRecipePosition));
+
+            // To create a new task when back back button is pressed. It will open up MainActivity
+            intentDetail.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
             PendingIntent pendingIntentDetail = PendingIntent.getActivity(context, 0, intentDetail, PendingIntent.FLAG_CANCEL_CURRENT);
 
             // Set title of Recipe

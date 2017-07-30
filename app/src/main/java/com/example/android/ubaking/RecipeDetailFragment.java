@@ -1,20 +1,21 @@
 package com.example.android.ubaking;
 
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.ubaking.model.RecipeStep;
 import com.example.android.ubaking.utilities.RecipeDataUtils;
@@ -36,6 +37,9 @@ import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
 
 /**
@@ -45,7 +49,9 @@ import com.google.android.exoplayer2.util.Util;
 /**
  * Initialize the fragment to load the first step of the chosen Recipe
  */
-public class RecipeDetailFragment extends Fragment implements ExoPlayer.EventListener {
+public class RecipeDetailFragment extends Fragment implements
+        ExoPlayer.EventListener,
+        YouTubePlayer.OnInitializedListener {
 
     private static final String TAG = RecipeDetailFragment.class.getSimpleName();
 
@@ -57,11 +63,18 @@ public class RecipeDetailFragment extends Fragment implements ExoPlayer.EventLis
     private SimpleExoPlayerView mPlayerView;
     private TextView mInstructionTextView;
     private FrameLayout mMediaView;
+
     private Button mPrevBtn;
     private Button mNextBtn;
 
     private CardView mStepCardView;
     private CardView mNavigateCardView;
+
+    // Youtube player
+    private static YouTubePlayer YPlayer;
+
+    private YouTubePlayerSupportFragment youTubePlayerFragment;
+    private FragmentTransaction transaction;
 
     public RecipeDetailFragment() {
     }
@@ -69,13 +82,13 @@ public class RecipeDetailFragment extends Fragment implements ExoPlayer.EventLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        // Retrieve value of position of Recipe Step from static Java class
-        selectedRecipeStepPosition = RecipeDataUtils.getPositionOfStep();
-
         // Inflate the fragment recipe details layout
         rootView = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
-        // Update Detail fragment
+        // Retrieve value of position of Recipe Step from static Java class
+        selectedRecipeStepPosition = RecipeDataUtils.getPositionOfStep();
+
+        // Update Detail fragment - need this for single pane
         updateView();
 
         return rootView;
@@ -83,6 +96,15 @@ public class RecipeDetailFragment extends Fragment implements ExoPlayer.EventLis
 
     public void updateView() {
 
+        // Full screen for Youtube is false
+        RecipeDataUtils.setFullScreen(false);
+
+        // Release existing Youtube player resource
+        if (YPlayer != null) {
+            YPlayer.release();
+        }
+
+        // Release exoplayer resource
         releasePlayer();
 
         mPlayerView = (SimpleExoPlayerView) rootView.findViewById(R.id.playerView);
@@ -96,9 +118,9 @@ public class RecipeDetailFragment extends Fragment implements ExoPlayer.EventLis
         mStepCardView.setVisibility(View.VISIBLE);
         mNavigateCardView.setVisibility(View.VISIBLE);
 
-        // We are in mobile portrait mode
-        if ((rootView.findViewById(R.id.recipe_detail_port) != null) &&
-                !getResources().getBoolean(R.bool.twoPaneMode)) {
+
+        // We are in mobile portrait mode, also need to apply to landscape
+        if (!getResources().getBoolean(R.bool.twoPaneMode)) {
 
             mPrevBtn = (Button) rootView.findViewById(R.id.detail_previous_button);
             mNextBtn = (Button) rootView.findViewById(R.id.detail_next_button);
@@ -142,20 +164,84 @@ public class RecipeDetailFragment extends Fragment implements ExoPlayer.EventLis
         }
 
         if (videoURL != null) {
-            initializePlayer(Uri.parse(videoURL));
+
+            // Determine whether we have a youtube player or regular video
+            if (videoURL.contains("youtu")) {
+
+                // Hide the exoplayer
+                mPlayerView.setVisibility(View.GONE);
+
+                // Initialize Youtube player
+                youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
+                transaction = getChildFragmentManager().beginTransaction();
+
+                Log.v(TAG, "ADDING youtube trx");
+                transaction.add(R.id.youtube_fragment, youTubePlayerFragment).commit();
+
+                youTubePlayerFragment.initialize(getString(R.string.youtube_api), this);
+
+            } else {
+                initializePlayer(Uri.parse(videoURL));
+            }
         }
 
         // Initialize recipe step instructions
         mInstructionTextView = (TextView) rootView.findViewById(R.id.detail_step);
         mInstructionTextView.setText(getRecipeStep().getDesc());
+    }
+
+
+    @Override
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+
+        if (!b) {
+            // Portrait Mode
+            YPlayer = youTubePlayer;
+            YPlayer.setFullscreen(false);
+            YPlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
+
+                @Override
+                public void onFullscreen(boolean b) {
+
+                    if (b) {
+                        RecipeDataUtils.setFullScreen(true);
+                    }
+                    else {
+                        RecipeDataUtils.setFullScreen(false);
+                    }
+
+                }
+            });
+
+            YPlayer.loadVideo(RecipeDataUtils.getYoutubeVideoId(videoURL));
+
+            // Hide full screen button in portrait mode and two-pane mode
+            YPlayer.setShowFullscreenButton(false);
+
+            // if we are in mobile-landscape mode, enable full screen option
+            if ((rootView.findViewById(R.id.recipe_detail_land) != null) &&
+                    !getResources().getBoolean(R.bool.twoPaneMode)) {
+
+                YPlayer.setShowFullscreenButton(true);
+            }
+
+            YPlayer.play();
+        }
 
     }
+
+    @Override
+    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+        Toast.makeText(getContext(), youTubeInitializationResult.toString(), Toast.LENGTH_LONG).show();
+    }
+
 
     /**
      * Initialize ExoPlayer.
      *
      * @param mediaUri The URI of the sample to play.
      */
+
     private void initializePlayer(Uri mediaUri) {
 
         if (mExoPlayer == null) {
@@ -178,7 +264,6 @@ public class RecipeDetailFragment extends Fragment implements ExoPlayer.EventLis
 
                 // Hide status bar
                 getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
             }
 
             // Full screen the media card view
@@ -219,6 +304,7 @@ public class RecipeDetailFragment extends Fragment implements ExoPlayer.EventLis
     public void onDestroy() {
         super.onDestroy();
         releasePlayer();
+
     }
 
     /**
@@ -228,7 +314,9 @@ public class RecipeDetailFragment extends Fragment implements ExoPlayer.EventLis
      */
     private RecipeStep getRecipeStep() {
 
-        return RecipeDataUtils.getRecipeStepList().get(selectedRecipeStepPosition);
+        //return RecipeDataUtils.getRecipeStepList().get(selectedRecipeStepPosition);
+        return RecipeDataUtils.getRecipeStepList().get(RecipeDataUtils.getPositionOfStep());
+
     }
 
     /**
@@ -239,7 +327,17 @@ public class RecipeDetailFragment extends Fragment implements ExoPlayer.EventLis
      */
     public void setRecipeStepPosition(int position) {
 
-        selectedRecipeStepPosition = position;
+        //selectedRecipeStepPosition = position;
+
+        //selectedRecipeStepPosition = RecipeDataUtils.getPositionOfStep();
+    }
+
+    public static YouTubePlayer getYPlayer() {
+        return YPlayer;
+    }
+
+    public static void setYPlayer(YouTubePlayer YPlayer) {
+        RecipeDetailFragment.YPlayer = YPlayer;
     }
 
     /**
@@ -291,5 +389,6 @@ public class RecipeDetailFragment extends Fragment implements ExoPlayer.EventLis
     public void onPositionDiscontinuity() {
 
     }
+
 }
 

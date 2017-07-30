@@ -1,19 +1,33 @@
 package com.example.android.ubaking.utilities;
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.ubaking.R;
 import com.example.android.ubaking.model.Recipe;
 import com.squareup.picasso.Picasso;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,23 +46,36 @@ public class RecipeMainAdapter extends RecyclerView.Adapter<RecipeMainAdapter.Re
 
     private final RecipeMainOnClickHandler mClickHandler;
 
+    private final RecipeMenuItemOnClickHandler mRecipeItemClickHandler;
+
     /**
-     * The interface that receives onClick messages.
+     * The interface that receives onClick messages
      */
     public interface RecipeMainOnClickHandler {
         void onClick(Recipe recipe);
     }
+
+    /**
+     * The interface that receives onClick messages for the three dot menu option in each recipe
+     */
+    public interface RecipeMenuItemOnClickHandler {
+        void onClickRecipeMenuItem(Recipe recipe, View view);
+    }
+
     /**
      * Constructor
      *
      * @param mContext
      * @param recipeData
      */
-    public RecipeMainAdapter(Context mContext, List<Recipe> recipeData, RecipeMainOnClickHandler clickHandler) {
+    public RecipeMainAdapter(Context mContext, List<Recipe> recipeData,
+                             RecipeMainOnClickHandler clickHandler,
+                             RecipeMenuItemOnClickHandler itemClickHandler) {
 
         this.mContext = mContext;
         this.mData = recipeData;
         mClickHandler = clickHandler;
+        mRecipeItemClickHandler = itemClickHandler;
     }
 
 
@@ -65,33 +92,77 @@ public class RecipeMainAdapter extends RecyclerView.Adapter<RecipeMainAdapter.Re
     @Override
     public void onBindViewHolder(RecipeMainAdapter.RecipeViewHolder holder, int position) {
 
-        Recipe recipe = mData.get(position);
-        Log.v(TAG, "OnBindViewHolder");
+        final Recipe recipe = mData.get(position);
         holder.recipeNameTextView.setText(recipe.getRecipeName());
 
         // Check if we have imageURL, if so, load the image using Picasso
-        if (recipe.getImageURL()!= null && recipe.getImageURL().length() > 0) {
+        if (recipe.getImageURL() != null && recipe.getImageURL().length() > 0) {
 
-            // Download image from url and display it onto the imageview
-            Picasso.with(mContext).load(recipe.getImageURL()).into(holder.imageUrlView);
-        }
-        else {
+            Uri uri = Uri.parse(recipe.getImageURL());
+
+            Picasso.with(mContext).load(uri).into(holder.imageUrlView);
+
+        } else {
             switch (recipe.getRecipeName()) {
                 case "Nutella Pie":
-                    holder.imageUrlView.setImageResource(R.drawable.nutella);
+                    try {
+                        holder.imageUrlView.setImageBitmap(getBitmapFromAsset("nutella.jpg"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "Brownies":
-                    holder.imageUrlView.setImageResource(R.drawable.brownies);
+                    try {
+                        holder.imageUrlView.setImageBitmap(getBitmapFromAsset("brownies.jpg"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "Yellow Cake":
-                    holder.imageUrlView.setImageResource(R.drawable.yellowcake);
+                    try {
+                        holder.imageUrlView.setImageBitmap(getBitmapFromAsset("yellowcake.jpg"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "Cheesecake":
-                    holder.imageUrlView.setImageResource(R.drawable.cheesecake);
+                    try {
+                        holder.imageUrlView.setImageBitmap(getBitmapFromAsset("cheesecake.jpg"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
             }
         }
 
+        // Apply onClick listener to 3 dots
+        holder.recipeOptionMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRecipeItemClickHandler.onClickRecipeMenuItem(recipe, v);
+            }
+        });
+
+    }
+
+
+    public AssetManager getAssets() {
+        // Ensure we're returning assets with the correct configuration.
+        return mContext.getAssets();
+    }
+
+    /**
+     * This method is used to retrieve asset images
+     *
+     * @param strName
+     * @return
+     * @throws IOException
+     */
+    private Bitmap getBitmapFromAsset(String strName) throws IOException {
+        AssetManager assetManager = getAssets();
+        InputStream istr = assetManager.open(strName);
+        Bitmap bitmap = BitmapFactory.decodeStream(istr);
+        return bitmap;
     }
 
     @Override
@@ -102,6 +173,16 @@ public class RecipeMainAdapter extends RecyclerView.Adapter<RecipeMainAdapter.Re
             return 0;
         }
         return mData.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     /**
@@ -123,12 +204,15 @@ public class RecipeMainAdapter extends RecyclerView.Adapter<RecipeMainAdapter.Re
 
         final TextView recipeNameTextView;
         final ImageView imageUrlView;
+        final ImageView recipeOptionMenu;
 
         RecipeViewHolder(View view) {
             super(view);
 
             recipeNameTextView = (TextView) view.findViewById(R.id.recipe_name);
             imageUrlView = (ImageView) view.findViewById(R.id.recipeImageView);
+            recipeOptionMenu = (ImageView) view.findViewById(R.id.recipe_options_menu);
+
             view.setOnClickListener(this);
         }
 

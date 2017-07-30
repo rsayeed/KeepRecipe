@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Keep Recipe</string>
     <string name="actionBar_main">Recipe List</string>
+    <string name="actionBar_add">Add Recipe</string>
+    <string name="recipeMenu_delete">Remove</string>
+    <string name="toast_recipeRemoved">Removed recipe</string>
     <string name="error_internet">Could not load Recipe data, please check your internet connection</string>
     <string name="view_recipe_ingredients">View Recipe Ingredients</string>
     <string name="recipe_ingredients">Recipe Ingredients</string>
@@ -8,16 +11,28 @@
     <string name="recipe_instructions">STEP DETAILS</string>
     <string name="previous_btn">Previous Step</string>
     <string name="next_btn">Next Step</string>
-    <string name="addActivity_Title">Add a Recipe!</string>
+    <string name="addActivity_Title">Let\'s add a new recipe!</string>
     <string name="addActivity_recipeNameEdit">Enter a Recipe name</string>
     <string name="quantityLabel">Quantity</string>
-    <string name="measureLabel">Measure (cup, tspn, etc)</string>
+    <string name="measureLabel">Measure (e.g., cup, tsp, tblsp)</string>
     <string name="ingredientLabel">Ingredient</string>
     <string name="recipe_steps">Recipe Steps</string>
     <string name="shortDescLabel">Short Description</string>
-    <string name="longDescLabel">Long Description</string>
-    <string name="videoLabel">Video Link</string>
+    <string name="longDescLabel">Extra Details</string>
+    <string name="videoLabel">Media URL (e.g., Youtube)</string>
     <string name="imageSelectionLabel">Recipe Photo</string>
     <string name="add_button">ADD</string>
+    <string name="error_img">Error deleting Image</string>
+    <string name="permission_denied">Permisson denied</string>
+    <string name="error_recipe_name">Recipe name is required</string>
+    <string name="error_recipe_ingredient">Ingredient is required</string>
+    <string name="error_recipe_stepDesc">Please enter a short description</string>
+    <string name="error_recipe_video">Please enter a Youtube URL</string>
+    <string name="contact_admin">There has been an error. Please send us details on what went wrong!</string>
+    <string name="menu_contact">Contact Support</string>
+    <string name="email_to">keeprecipe@gmail.com</string>
+    <string name="email_subject">Keep Recipe - Feedback/Support</string>
+
+    <string name="youtube_api"></string>
 
 </resources>

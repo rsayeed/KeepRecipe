@@ -1,12 +1,15 @@
 package com.example.android.ubaking.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 /**
  * Created by rubab on 6/25/17.
  */
 
-public class RecipeStep implements Serializable {
+public class RecipeStep implements Parcelable {
 
     String recipeId;
     String stepId;
@@ -14,6 +17,29 @@ public class RecipeStep implements Serializable {
     String desc;
     String videoURL;
     String thumbURL;
+
+    public RecipeStep() {}
+
+    protected RecipeStep(Parcel in) {
+        recipeId = in.readString();
+        stepId = in.readString();
+        shortDesc = in.readString();
+        desc = in.readString();
+        videoURL = in.readString();
+        thumbURL = in.readString();
+    }
+
+    public static final Creator<RecipeStep> CREATOR = new Creator<RecipeStep>() {
+        @Override
+        public RecipeStep createFromParcel(Parcel in) {
+            return new RecipeStep(in);
+        }
+
+        @Override
+        public RecipeStep[] newArray(int size) {
+            return new RecipeStep[size];
+        }
+    };
 
     public String getStepId() {
         return stepId;
@@ -73,5 +99,22 @@ public class RecipeStep implements Serializable {
                 ", videoURL='" + videoURL + '\'' +
                 ", thumbURL='" + thumbURL + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeString(recipeId);
+        dest.writeString(stepId);
+        dest.writeString(shortDesc);
+        dest.writeString(desc);
+        dest.writeString(videoURL);
+        dest.writeString(thumbURL);
+
     }
 }
