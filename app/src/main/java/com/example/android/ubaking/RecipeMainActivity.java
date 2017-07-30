@@ -126,7 +126,7 @@ public class RecipeMainActivity extends AppCompatActivity implements
             mRecipeData = new ArrayList<>();
         }
 
-        mRecipeData = new ArrayList<>();
+        //mRecipeData = new ArrayList<>();
 
         // Use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -172,9 +172,14 @@ public class RecipeMainActivity extends AppCompatActivity implements
          */
         if (mRecipeData.isEmpty()) {
             getSupportLoaderManager().initLoader(RECIPE_LOADER_ID, null, this);
-        } else {
-            restartLoader();
         }
+
+//        if (mRecipeData.isEmpty()) {
+//            getSupportLoaderManager().initLoader(RECIPE_LOADER_ID, null, this);
+//        } else {
+//            restartLoader();
+//        }
+
     }
 
     /**
@@ -294,9 +299,6 @@ public class RecipeMainActivity extends AppCompatActivity implements
                 loadRecipeData();
                 sharedPreferences.edit().putBoolean("firstrun", false).commit();
             }
-
-            // TEST MODE ONLY
-            loadRecipeData();
         }
     }
 
@@ -418,13 +420,14 @@ public class RecipeMainActivity extends AppCompatActivity implements
 
             if (requestCode == ADD_REQUEST_CODE) {
 
-                // Clear array of existing recipes
-                mRecipeData.clear();
+                // Get the new recipe object from the add activity intent
+                Recipe newRecipe = data.getParcelableExtra("newRecipe");
 
+                // Add recipe to the existing list that is associated to the main adapter
+                mRecipeData.add(newRecipe);
+
+                // Let the adapter know that the list has been updated
                 recipeMainAdapter.notifyDataSetChanged();
-
-                // Fetch data from DB again
-                restartLoader();
 
             }
         }
@@ -494,13 +497,20 @@ public class RecipeMainActivity extends AppCompatActivity implements
         if (getContentResolver().delete(uri, null, null) == 1) {
             Log.v(TAG, "DELETED RECORD");
 
-            // Clear array of existing recipes
-            mRecipeData.clear();
+            // Find the rescipe to delete
+            for (int i = 0; i < mRecipeData.size(); i++) {
 
-            recipeMainAdapter.notifyDataSetChanged();
+                Recipe recipeToDelete = mRecipeData.get(i);
 
-            // Fetch data from DB again
-            restartLoader();
+                if (recipeToDelete.getRecipeId().equalsIgnoreCase(recipeId)) {
+
+                    mRecipeData.remove(i);
+                    recipeMainAdapter.notifyItemRemoved(i);
+                    recipeMainAdapter.notifyItemRangeChanged(i, mRecipeData.size());
+
+                    break;
+                }
+            }
 
             return true;
         }

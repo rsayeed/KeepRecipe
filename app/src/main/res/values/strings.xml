@@ -28,7 +28,7 @@
     <string name="error_recipe_ingredient">Ingredient is required</string>
     <string name="error_recipe_stepDesc">Please enter a short description</string>
     <string name="error_recipe_video">Please enter a Youtube URL</string>
-    <string name="contact_admin">There has been an error. Please send us details on what went wrong!</string>
+    <string name="contact_admin">There has been an error. Please contact support.</string>
     <string name="menu_contact">Contact Support</string>
     <string name="email_to">keeprecipe@gmail.com</string>
     <string name="email_subject">Keep Recipe - Feedback/Support</string>

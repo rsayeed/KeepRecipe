@@ -186,7 +186,7 @@ public class RecipeMainAdapter extends RecyclerView.Adapter<RecipeMainAdapter.Re
     }
 
     /**
-     * Update the list of Trailer Items when new data has been laoded
+     * Update the list of recipe items when new data has been laoded
      */
     public void swapData(List<Recipe> list) {
 

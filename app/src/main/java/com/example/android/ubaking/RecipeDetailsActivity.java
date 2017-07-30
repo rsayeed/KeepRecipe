@@ -193,18 +193,6 @@ public class RecipeDetailsActivity extends AppCompatActivity implements
             text.append(recipeIngredients.getIngredient());
             text.append("\n");
         }
-        // text.setText("\u25CF" + " Apple pie" + "\n" + "\u25CF" + " Banannas in Pajamas");
-
-        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-
-        // if button is clicked, close the custom dialog
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
 
         dialog.show();
 

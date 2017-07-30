@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -148,6 +149,23 @@ public class RecipeAddActivity extends AppCompatActivity {
 
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        // Save recipe name, ingredients & step (first ones only), and image path
+        outState.putString("recipeName", mRecipeNameEditText.getText().toString());
+        outState.putString("quantity", mQuantityEditText.getText().toString());
+        outState.putString("measure", mMeasureEditText.getText().toString());
+        outState.putString("ingredient", mIngredientsEditText.getText().toString());
+        outState.putString("shortDesc", mShortDescEditText.getText().toString());
+        outState.putString("desc", mLongDescEditText.getText().toString());
+        outState.putString("video", mvideoEditText.getText().toString());
+
+        if (selectedImageUri != null) {
+            outState.putString("image", selectedImageUri.toString());
+        }
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_add_recipe);
@@ -165,6 +183,35 @@ public class RecipeAddActivity extends AppCompatActivity {
 
         animShake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
         vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        // Retrieve data if orientation change was detected
+        if (savedInstanceState != null) {
+
+            mRecipeNameEditText.setText(savedInstanceState.getString("recipeName"));
+            mQuantityEditText.setText(savedInstanceState.getString("quantity"));
+            mMeasureEditText.setText(savedInstanceState.getString("measure"));
+            mIngredientsEditText.setText(savedInstanceState.getString("ingredient"));
+            mShortDescEditText.setText(savedInstanceState.getString("shortDesc"));
+            mLongDescEditText.setText(savedInstanceState.getString("desc"));
+            mvideoEditText.setText(savedInstanceState.getString("video"));
+            String selectedImageUriStr = savedInstanceState.getString("image");
+
+            if (selectedImageUriStr != null) {
+                selectedImageUri = Uri.parse(selectedImageUriStr);
+
+                InputStream inputStream = null;
+
+                try {
+                    inputStream = getContentResolver().openInputStream(selectedImageUri);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+
+                mCameraButton.setImageBitmap(bitmap);
+            }
+        }
 
         // Set a listener on ingredients field
         mIngredientsEditText.addTextChangedListener(new TextWatcher() {
