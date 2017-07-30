@@ -25,7 +25,7 @@ Android media application that keeps track of your favorite recipes. This was a 
 
 This project was developed using Android Studio, so one would simply be able to clone this repository and import the project
 directly into Android Studio without any issues. The only thing that is not included is the API key that is needed if you
-wish to embed Youtube videos in the app. In order to generate a Youtube key, please follow the instructions [at Google's Youtube API page](https://developers.google.com/youtube/v3/getting-started)
+wish to embed Youtube videos in the app. In order to generate a Youtube key, please follow the instructions [at Google's Youtube API page](https://developers.google.com/youtube/v3/getting-started).
 
 After obtaining the key, place the key into the string resource "youtube_api" found in the strings.xml file.
 
