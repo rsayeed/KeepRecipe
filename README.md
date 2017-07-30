@@ -5,7 +5,7 @@ Android media application that keeps track of your favorite recipes. This was a 
 <ul>
 <li>The app allows users to keep track of their favorite recipes </li>
 <li>Gives users the ability to create and view recipes, ingredients, and instructional videos</li>
-<li>Makes use of ExoPlayer API to load and display videos from a given URL</li>
+<li>Makes use of ExoPlayer API as well as the Youtube API to load and display videos from a given URL</li>
 <li>Use of fragments to present dynamic content in single pane/multi-pane layouts along with the proper handling of configuration changes</li>
 <li>Use of various Android components such as Recycler views and Content Providers for dynamic loading of data</li>
 <li>Comes with a widget that allows users to quickly browse thru all the Recipes in their collection along with the assoicated ingredients</li>
