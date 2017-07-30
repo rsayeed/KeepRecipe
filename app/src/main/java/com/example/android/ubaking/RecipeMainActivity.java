@@ -174,12 +174,6 @@ public class RecipeMainActivity extends AppCompatActivity implements
             getSupportLoaderManager().initLoader(RECIPE_LOADER_ID, null, this);
         }
 
-//        if (mRecipeData.isEmpty()) {
-//            getSupportLoaderManager().initLoader(RECIPE_LOADER_ID, null, this);
-//        } else {
-//            restartLoader();
-//        }
-
     }
 
     /**
