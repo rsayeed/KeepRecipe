@@ -68,7 +68,7 @@
 
         <provider
             android:name="com.keeprecipe.android.data.RecipeContentProvider"
-            android:authorities="com.keeprecipe.android.ubaking"
+            android:authorities="com.keeprecipe.android"
             android:exported="true" />
 
         <service android:name="com.keeprecipe.android.RecipeDataService" />
