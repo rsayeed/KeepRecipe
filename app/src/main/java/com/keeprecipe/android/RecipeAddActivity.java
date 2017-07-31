@@ -36,7 +36,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.keeprecipe.android.R;
 import com.keeprecipe.android.model.Recipe;
 import com.keeprecipe.android.model.RecipeIngredients;
 import com.keeprecipe.android.model.RecipeStep;
