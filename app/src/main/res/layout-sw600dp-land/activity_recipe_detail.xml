@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/recipeListFragment"
-        android:name="com.example.android.ubaking.RecipeListFragment"
+        android:name="com.keeprecipe.android.RecipeListFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -31,7 +31,7 @@
         android:layout_width="0dp"
         android:layout_weight="1.5"
         android:layout_height="match_parent"
-        android:name="com.example.android.ubaking.RecipeDetailFragment"
+        android:name="com.keeprecipe.android.RecipeDetailFragment"
         tools:layout="@layout/fragment_recipe_detail">
     </fragment>
 

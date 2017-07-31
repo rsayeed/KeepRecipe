@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.ubaking">
+    package="com.keeprecipe.android">
 
     <!-- This permission is necessary in order to use internet functionality -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,7 +26,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".RecipeMainActivity"
+            android:name="com.keeprecipe.android.RecipeMainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -37,26 +37,26 @@
         </activity>
 
         <activity
-            android:name=".RecipeDetailsActivity"
-            android:parentActivityName=".RecipeMainActivity"
+            android:name="com.keeprecipe.android.RecipeDetailsActivity"
+            android:parentActivityName="com.keeprecipe.android.RecipeMainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:taskAffinity=""
             android:excludeFromRecents="true">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".RecipeMainActivity" />
+                android:value="com.keeprecipe.android.RecipeMainActivity" />
         </activity>
 
         <activity
-            android:name=".RecipeAddActivity"
-            android:parentActivityName=".RecipeMainActivity"
+            android:name="com.keeprecipe.android.RecipeAddActivity"
+            android:parentActivityName="com.keeprecipe.android.RecipeMainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".RecipeMainActivity" />
+                android:value="com.keeprecipe.android.RecipeMainActivity" />
         </activity>
 
-        <receiver android:name=".RecipeWidgetProvider">
+        <receiver android:name="com.keeprecipe.android.RecipeWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -67,11 +67,11 @@
         </receiver>
 
         <provider
-            android:name=".data.RecipeContentProvider"
-            android:authorities="com.example.android.ubaking"
+            android:name="com.keeprecipe.android.data.RecipeContentProvider"
+            android:authorities="com.keeprecipe.android.ubaking"
             android:exported="true" />
 
-        <service android:name=".RecipeDataService" />
+        <service android:name="com.keeprecipe.android.RecipeDataService" />
 
     </application>
 
